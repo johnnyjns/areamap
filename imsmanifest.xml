@@ -23,7 +23,6 @@
 		<resource identifier="RES_01" type="webcontent" adlcp:scormtype="sco" href="index.html">
 			<file href="biblioteca/css/estilos.css" />
 			<file href="biblioteca/js/SCORM_API_wrapper.js" />
-			<file href="biblioteca/js/swfobject.js" />
 		</resource>
 	</resources>
 </manifest>
