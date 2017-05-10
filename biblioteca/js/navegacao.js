@@ -2,8 +2,9 @@ var lms = true;
 
 if (lms)
 {
-	//Instancia um objeto da classe pipwerks.SCORM
-	var scorm = pipwerks.SCORM;
+	//Atribui o objeto pipwerks.SCORM na variavel scorm
+	var scorm = pipwerks.SCORM,
+		trace = pipwerks.UTILS.trace;
 	//Definição da versão do SCORM utilizada
 	scorm.version = "1.2";
 	//Inicia a conexão com o SCORM
@@ -12,25 +13,25 @@ if (lms)
 	//Verifica se conexão com LMS ainda está ativa
 	window.onunload = window.onbeforeunload = function()
 	{
-	    fecharJanela();
+		if(scorm.connection.isActive)
+		{
+			trace("Finalizando conexão no Unload");
+			fecharJanela();
+		}
 	}
 }
 
 function fecharJanela()
 {
-	var tab = window.open(window.location, "_self");
-	var tab2 = window.open(window.location,"_top");
+	var tab = window.open(window.location, "_self"),
+		tab2 = window.open(window.location,"_top");
 
-	if (lms)
-	{
-		scorm.data.set("cmi.core.lesson_status", "completed");
-		scorm.data.set("cmi.core.score.raw", 100);
-		scorm.data.set("cmi.core.score.min", 0);
-		scorm.data.set("cmi.core.score.max", 100);
-		scorm.save();
-		scorm.quit();
-	}
-
+	scorm.data.set("cmi.core.lesson_status", "completed");
+	scorm.data.set("cmi.core.score.raw", 100);
+	scorm.data.set("cmi.core.score.min", 0);
+	scorm.data.set("cmi.core.score.max", 100);
+	scorm.save();
+	scorm.quit();
 	tab.close();
 	tab2.close();
 }
